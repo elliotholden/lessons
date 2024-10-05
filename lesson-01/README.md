@@ -25,16 +25,14 @@ We also have the concept or __container registries__. A container *registry* is 
 
 1. From your comman prompt type the following:
 
-    ```podman images```
+        podman images
 
-
-<br />
 
 If this is your first time using __podman__ or __docker__ you will notice there are no images returned in the results.<br />
 
 
 >[eholden@workstation-01 emwg]$ podman images\
->REPOSITORY  TAG         IMAGE ID    CREATED     SIZE
+>REPOSITORYTAG  IMAGE ID    CREATED     SIZE
 
 <br />
 
