@@ -9,7 +9,23 @@ __NOTE:__ Think of a container the same way as when you run
 
 You are running a *command* not a *virtual machine* 
 
-## Tools:
-* [podman cli](https://podman.io/docs/installation)
-* [jq](https://jqlang.github.io/jq/download/)
-* vim (or any equivilent txt editor*)
+When talking about containers there is the concept of a container *"image"* - the container __image__ is simply a tar file that holds the contents of a container. When you *run* a container you are actually running the container image. After you initially run a container from an image you can then *start* and *stop* the container.
+
+### Registries
+We also have the concept or __container registries__. A container *registry* is nothing more than a repository (or location) of where container images are stored. Some popular regisries are:
+
+    - quay.io
+    - docker.io
+    - registry.redhat.io
+    - regisry.access.redhat.com
+
+
+
+#### Excersise 1.a
+1. From your comman prompt type the following:
+> podman images
+
+If this is your first time using __podman__ or __docker__ you will notice there are no images.
+
+2. Now type the following
+> podman pull docker.io/library/httpd
