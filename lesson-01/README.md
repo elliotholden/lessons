@@ -7,12 +7,9 @@ Unlike a __vm__, instead of virtualizing an entire machine, it virtualizes the a
 __NOTE:__ Think of a container the same way as when you run 
 >systemctl start httpd
 
-You are running *command* not a *virtual machine* 
+You are running a *command* not a *virtual machine* 
 
 ## Tools:
 * [podman cli](https://podman.io/docs/installation)
 * [jq](https://jqlang.github.io/jq/download/)
 * vim (or any equivilent txt editor*)
-
-
-
