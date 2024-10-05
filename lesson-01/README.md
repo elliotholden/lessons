@@ -27,5 +27,10 @@ We also have the concept or __container registries__. A container *registry* is 
 
 If this is your first time using __podman__ or __docker__ you will notice there are no images.
 
+    [eholden@workstation-01 emwg]$ podman images
+    REPOSITORY  TAG         IMAGE ID    CREATED     SIZE
+    [eholden@workstation-01 emwg]$ 
+
+
 2. Now type the following
 > podman pull docker.io/library/httpd
