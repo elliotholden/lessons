@@ -74,7 +74,7 @@ We also have the concept or __container registries__. A container *registry* is 
 <br /><br />
 
 ### Inspecting Images
-You can use the __skopeo__ command line tool inpsect an image on a remote registry before you pull it down. Simply typing: ```skopeo inspect docker://<FQCN>``` will pull down a JSON representation of the image meta-data. __FQCN__ stands for __Fully Qualified Container Name__ (*even though its actually the "image" name*)
+You can use the __skopeo__ command line tool inpsect an image on a remote registry before you pull it down. Simply typing: ```skopeo inspect docker://<FQCN>``` will pull down a JSON representation of the image meta-data. __FQCN__ stands for __Fully Qualified Container Name__ (*even though it's actually the "image" name*)
 
 
 #### Excersise 1.b
