@@ -19,6 +19,35 @@ This will run the **ls** command from the perspective of the container *namespac
 |__podman stats__|*Display percentage of CPU, memory, <br>network I/O, block I/O and PIDs for one<br> or more containers.*|__podman stats__ *ctrID*|
 |__podman top__|Display the running processes of a container.|__podman top__ *ctrID pid user huser comm*|
 
+
+
+The `USER` command in a Dockerfile sets the default user that will be used to run the container's main process. This user will be used to execute the `CMD` or `ENTRYPOINT` instruction in the Dockerfile.
+
+When you use the `USER` command in a Dockerfile, you're setting the user ID (UID) and group ID (GID) that will be used to run the container's main process. This user will be used to own the process and its resources, such as files and network connections.
+
+The `USER` command does not directly relate to the default user used when you "exec" into a container. When you use `docker exec` to run a command inside a container, you can specify a user using the `-u` or `--user` flag. If you don't specify a user, it will default to the __user__ set in the container's configuration, which is specified by the `USER` instruction in the Containerfile. If no `USER` instruction is set in the Containerfile, `podman exec` will default to using the root user (UID 0).
+
+Regarding the `{{.User}}` field in the container image's JSON metadata, it refers to the user that was specified in the `USER` command in the Containerfile. This field is used to store the user ID and group ID that were set by the `USER` command.
+
+Here's an example of how the `USER` command and the `{{.User}}` field relate:
+
+Dockerfile:
+```dockerfile
+FROM ubuntu:latest
+USER 1001:1001
+CMD ["echo", "Hello World"]
+```
+In this example, the `USER` command sets the default user to `1001:1001` (UID:GID). When you build the image and inspect its metadata, you'll see the `{{.User}}` field set to `1001:1001`.
+
+Container image metadata (JSON):
+```json
+{
+  "User": "1001:1001",
+  ...
+}
+```
+When you run the container, the main process will run as the user `1001:1001`. If you use `docker exec` to run a command inside the container, you can specify a different user using the `-u` or `--user` flag.
+
 ### Exersise 3.a
 
 1. Pull the Bitnami MariaDB image from docker and then run it.
@@ -71,5 +100,3 @@ __NOTE:__
 
 * When you run `podman exec` without the `--user` option, it will use the default user set in the container's configuration, which is specified by the `USER` instruction in the Containerfile.
 * If no `USER` instruction is set in the Dockerfile, `podman exec` will default to using the root user (UID 0).
-
-
