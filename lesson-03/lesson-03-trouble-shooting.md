@@ -28,13 +28,38 @@ This will run the **ls** command from the perspective of the container *namespac
 
         podman run -d --name bitnami-mariadbc docker.io/bitnami/mariadb
         
-2. Next run **podman ps -a** and notice that the container is not running. Run **podman logs bitnami-mariadb** and notice the error message telling you that the **MARIADBD_ROOT_PASSWORD** environment variable needs to be set. Remove the container and run it again with the evironment variable included in the command:
+2. Next type the command: **podman ps -a** and notice that the container is not running. Now, type the command: **podman logs bitnami-mariadb** and notice the error message telling you that the **MARIADBD_ROOT_PASSWORD** environment variable needs to be set. Remove the container and run it again with the evironment variable included in the command:
+
+    **Remove:**
 
         podman rm bitnami-mariadb 
 
       --
+      
+      **Re-run:**
+
 
         podman run -d --name bitnami-mariadb -e MARIADB_ROOT_PASSWORD=password docker.io/bitnami/mariadb 
+
+3. Now, **exec** into the container to run the ***whoami*** command to find out the default user.
+
+        podman exec bitnami-mariadb whoami
+
+    Notice it shows that are the user with the UID of **1001**
+
+4. Next, again using **exec**, inspect the /etc/passwd file inside the container using **grep**
+
+        podman exec bitnami-mariadb grep 1001 /etc/passwd
+
+    **Output:**
+
+    >1001:*:1001:0:container user:/:/bin/sh
+
+    Notice this it does not show a username. This is because the username was never set when the user was created.
+
+
+
+
 
 
 
