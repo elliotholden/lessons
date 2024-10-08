@@ -57,9 +57,19 @@ This will run the **ls** command from the perspective of the container *namespac
 
     Notice this it does not show a username. This is because the username was never set when the user was created.
 
+5. Now run the **podman top** command to show the the user inside the container that is running the main process (in this case **mariadbd**), and it also shows the UID that the container UID is mapped to on the host system. The **user** option is for the *container* user and the **huser** option is for the *host* user.
 
+        podman top bitnami-mariadb user huser
 
+    |USER|HUSER|
+    |----|-----|
+    |1001|101000|
 
+<br>
 
+__NOTE:__
+
+* When you run `podman exec` without the `--user` option, it will use the default user set in the container's configuration, which is specified by the `USER` instruction in the Containerfile.
+* If no `USER` instruction is set in the Dockerfile, `podman exec` will default to using the root user (UID 0).
 
 
