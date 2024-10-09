@@ -3,7 +3,7 @@
 1. Demonstrate the difference between using **podman logs** vs *tailling* application logs from within a container. Use the **nginx** container to show this.
 
     * run a **nginx** container in detatched mode
-        >podman run --name web -d -p 8080:80 docker.io/library/nginx
+        >podman run --name web -d -p 8080:8080 docker.io/library/nginx
     * In another terminal view the logs with **podman logs**
         >podman logs web
 
