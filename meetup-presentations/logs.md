@@ -12,16 +12,17 @@ and __/dev/stderr__. So they don't actually end up in *files*, but rather they a
 to the computer screen, where __stdout__ and __stderr__ are configure to display by
 default on my Linux/Unix machines.
 
-### httpd
 
-### nginx
-   * run a **nginx** container in detatched mode
-        >podman run --name web -d -p 8080:8080 docker.io/library/nginx
+### custom - local/httpd:latest
+   * run a **httpd** container in detatched mode
+        >podman run --name web -d -p 8888:8080 docker.io/library/nginx
    * In another terminal tail the logs with **podman logs -f**
         >podman logs -f web
-   * Open a web brower and go to *http://localhost:8080*
+   * Open a web brower and go to *http://localhost:8888*
         *notice that nothing is being output to the logs in the ssecond terminal window*
    * Go back to the first terminal window and use the **exec** command to restart the webserver
-        >podman exec web nginx -s reload 
+        >podman exec web httpd -k graceful
 
         *notice the log output in the second terminal window* 
+
+### offical - docker.io/library/httpd:latest
