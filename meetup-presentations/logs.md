@@ -42,7 +42,7 @@ default on my Linux/Unix machines.
 * Go back to the first terminal window and use the **exec** command to restart the webserver
   >podman exec web httpd -k restart 
 
-  *Again, notice the log output in the second terminal window* 
+  *Again, notice that nothing is being output to the log in the second terminal window* 
 
 ### Official - docker.io/library/httpd:latest
 * Now run an official Red Hat version of Apache (__httpd__) in detached mode.
