@@ -37,7 +37,7 @@ default on my Linux/Unix machines.
 
 * Open a web brower and go to *http://localhost:8888*. Refresh the page a couple of times.
 
-  *Notice that nothing is being output to the logs in the ssecond terminal window*
+  *Notice that nothing is being output to the logs in the second terminal window*
 
 * Go back to the first terminal window and use the **exec** command to restart the webserver
   >podman exec web httpd -k restart 
