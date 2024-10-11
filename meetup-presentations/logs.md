@@ -39,16 +39,16 @@ default on my Linux/Unix machines.
   *Notice that nothing is being output to the logs in the second terminal window*
 
 * Go back to the first terminal window and use the **exec** command to restart the webserver
-  >podman exec web httpd -k restart 
+  >podman exec custom-httpd httpd -k restart 
 
   *Again, notice that nothing is being output to the log in the second terminal window* 
 
-### Official - docker.io/library/httpd:latest
+### Official - registry.access.redhat.com/ubi9/httpd-24:latest 
 * Now run an official Red Hat version of Apache (__httpd__) in detached mode.
-  > podman run -d --name official-httpd -p 7777:80 registry.access.redhat.com/ubi9/httpd-24
+  > podman run -d --name redhat-httpd -p 7777:80 registry.access.redhat.com/ubi9/httpd-24
 
 * In another terminal tail the logs of this new container with **podman logs -f**
-  >podman logs -f official-httpd
+  >podman logs -f redhat-httpd
 
 * Open a web brower and go to *http://localhost:7777*. Refresh the page a couple of times.
 
@@ -59,9 +59,9 @@ default on my Linux/Unix machines.
   *Again, notice there is activity in the logs*
 
 ### Solution
-* Shell into the __official-httpd__ container using the __exec__ command and inspect the contents of */etc/httpd/conf/httpd.conf*
+* Shell into the __redhat-httpd__ container using the __exec__ command and inspect the contents of */etc/httpd/conf/httpd.conf*
 
-  >podman exec -it offical-httpd bash
+  >podman exec -it redhat-httpd bash
 
   >vi /etc/httpd/conf/httpd.conf
 
