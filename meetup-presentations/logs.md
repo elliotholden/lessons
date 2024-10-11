@@ -1,10 +1,10 @@
 # Logs
 
-**Purpose:** The purpose of this lab is to demonstrate the difference between using
-*podman logs* vs *tailing* application logs from within a container.
+**Purpose:** The purpose of this lab 
+s to demonstrate how the **podman logs** command is actually working.
 
-Whether or not the standard application logs are written to **stdout** and **stderr**
-thus being accessible by __podman logs__ depends on how the log files are configured 
+Whether or not the standard application logs are written to **stdout** and **stderr**,
+thus being accessible by __podman logs__, depends on how the log files are configured 
 inside the container image. In standard __Apache__, non-containerized
 applications, the application logs are typical writtend files located in __/var/log/httpd__.
 But in containerized they are typically (but not always) symlinked to __/dev/stdout__
