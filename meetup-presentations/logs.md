@@ -60,7 +60,7 @@ default on my Linux/Unix machines.
   *Again, notice there is activity in the logs*
 
 ### Solution
-* Shell into the __official-httpd__ container using the __exec__ command and inspec the contents of */etc/httpd/conf/httpd.conf*
+* Shell into the __official-httpd__ container using the __exec__ command and inspect the contents of */etc/httpd/conf/httpd.conf*
 
   >podman exec -it offical-httpd bash
 
