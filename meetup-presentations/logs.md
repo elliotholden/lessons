@@ -6,7 +6,7 @@ s to demonstrate how the **podman logs** command is actually working.
 Whether or not the standard application logs are written to **stdout** and **stderr**,
 thus being accessible by __podman logs__, depends on how the log files are configured 
 inside the container image. In standard __Apache__, non-containerized
-applications, the application logs are typical writtend files located in __/var/log/httpd__.
+applications, the application logs are typically written files located in __/var/log/httpd__.
 But in containerized they are typically (but not always) symlinked to __/dev/stdout__
 and __/dev/stderr__. So they don't actually end up in *files*, but rather they are sent
 to the computer screen, where __stdout__ and __stderr__ are configure to display by
