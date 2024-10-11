@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/ubi9-minimal
 LABEL maintainer="Elliot Holden <elliot@ElliotMyWebGuy.com>" \
     description="Container logs lab"
 
-RUN microdnf install ---assumeyes --nodocs \
+RUN microdnf install --assumeyes --nodocs \
     --setopt="install_weak_deps=0" httpd && \
     microdnf clean all
 
