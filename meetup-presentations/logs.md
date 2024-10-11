@@ -1,7 +1,6 @@
-# Logs
+# {Container} Logs
 
-**Purpose:** The purpose of this lab 
-s to demonstrate how the **podman logs** command is actually working.
+**Purpose:** The purpose of this lab is to demonstrate how the **[podman|docker] logs** command is actually working.
 
 Whether or not the standard application logs are written to **stdout** and **stderr**,
 thus being accessible by __podman logs__, depends on how the log files are configured 
