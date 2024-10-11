@@ -106,3 +106,11 @@ default on my Linux/Unix machines.
           #
           CustomLog |/usr/bin/cat combined
      </IfModule>
+
+### Extra
+
+* For extra credit, run an Official Docker version of Apache and inspect the log files from within the container to see how logging has been implemented in this image.
+
+  >podman run -d --name docker-httpd -p 9999:80 docker.io/library/httpd
+
+  >podman exec docker-httpd __sh -c 'ls -l /var/log/httpd/*'__
