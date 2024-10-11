@@ -1,0 +1,10 @@
+FROM registry.access.redhat.com/ubi9-mininal
+LABEL maintainer="Elliot Holden <elliot@ElliotMyWebGuy.com>" \
+    description="Container logs lab"
+
+RUN microdnf install ---assumeyes --no-docs \
+    --setopt="install_weak_deps=0" httpd && \
+    dnf clean all
+
+ENTRYPOINT ["httpd"]
+CMD ["-D","FOREGROUND"]

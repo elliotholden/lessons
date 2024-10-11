@@ -26,8 +26,11 @@ default on my Linux/Unix machines.
           ENTRYPOINT ["httpd"]
           CMD ["-D","FOREGROUND"]
 
+   *  Build image:
+      > podman build -t localhost/httpd:latest .
+
    * Now run the newly created **httpd** container image in detatched mode
-        >podman run --name customer-httpd -d -p 8888:8080 localhost/httpd 
+        >podman run --name customer-httpd -d -p 8888:8080 localhost/httpd:latest
    * In another terminal tail the logs with **podman logs -f**
         >podman logs -f web
    * Open a web brower and go to *http://localhost:8888*
