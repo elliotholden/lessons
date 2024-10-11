@@ -109,8 +109,34 @@ default on my Linux/Unix machines.
 
 ### Extra
 
-* For extra credit, run an Official Docker version of Apache and inspect the log files from within the container to see how logging has been implemented in this image.
+* For extra credit, run the Official Docker version of Apache and inspect the log files from within the container to see how logging has been implemented in this image.
 
   >podman run -d --name docker-httpd -p 9999:80 docker.io/library/httpd
 
   >podman exec docker-httpd __sh -c 'ls -l /var/log/httpd/*'__
+
+  *Notice that ErrorLog and CustomLog are being sent to __/proc/self/fd/2__ and __/proc/self/fd/1__ respectively, which are both softlinks that utltimately point to __/dev/pts/0__* 
+
+          root@f5fcd6f5488d:/usr/local/apache2/conf# pwd
+          /usr/local/apache2/conf
+          root@f5fcd6f5488d:/usr/local/apache2/conf# grep -iE 'CustomLog|ErrorLog' httpd.conf
+          # ErrorLog: The location of the error log file.
+          # If you do not specify an ErrorLog directive within a <VirtualHost>
+          ErrorLog /proc/self/fd/2
+               # a CustomLog directive (see below).
+               CustomLog /proc/self/fd/1 common
+               #CustomLog "logs/access_log" combined
+          root@f5fcd6f5488d:/usr/local/apache2/conf# ls -l /proc/self/fd/1
+          lrwx------. 1 root root 64 Oct 11 11:03 /proc/self/fd/1 -> /dev/pts/0
+          root@f5fcd6f5488d:/usr/local/apache2/conf# ls -l /dev/stdout
+          lrwxrwxrwx. 1 root root 15 Oct 11 10:14 /dev/stdout -> /proc/self/fd/1
+          root@f5fcd6f5488d:/usr/local/apache2/conf# ls -l /dev/pts/0
+          crw--w----. 1 root tty 136, 0 Oct 11 11:04 /dev/pts/0
+          root@f5fcd6f5488d:/usr/local/apache2/conf# 
+
+__NOTE:__ In some configurations you may see that there are symlinks in /var/log/httpd pointing to /dev/stdout and /dev/stderr
+
+     /var/log/httpd/access_log -> /dev/stdout  
+     /var/log/httpd/error_log -> /dev/stderr
+
+*In this scenario __/dev/stdout__ and __/dev/stderr__ may both point to __/proc/self/fd/1__ and __/proc/self/fd/2__ respectively wich, again, both point to __/dev/pts0__
