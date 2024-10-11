@@ -12,10 +12,22 @@ and __/dev/stderr__. So they don't actually end up in *files*, but rather they a
 to the computer screen, where __stdout__ and __stderr__ are configure to display by
 default on my Linux/Unix machines.
 
+### Custom - local/httpd:latest
+   * Using a Containerfile create an image based on the __registry.access.redhat.com/ubi9__ image and install Apache (__httpd__). Make sure __httpd__ is started when the image is run. When building the image make sure to tag it as __localhost/httpd:latest__
 
-### custom - local/httpd:latest
-   * run a **httpd** container in detatched mode
-        >podman run --name web -d -p 8888:8080 docker.io/library/nginx
+          FROM registry.access.redhat.com/ubi9-mininal
+          LABEL maintainer="Elliot Holden <elliot@ElliotMyWebGuy.com>" \
+                description="Container logs lab"
+
+          RUN microdnf install ---assumeyes --no-docs \
+              --setopt="install_weak_deps=0" httpd && \
+              dnf clean all
+
+          ENTRYPOINT ["httpd"]
+          CMD ["-D","FOREGROUND"]
+
+   * Now run the newly created **httpd** container image in detatched mode
+        >podman run --name customer-httpd -d -p 8888:8080 localhost/httpd 
    * In another terminal tail the logs with **podman logs -f**
         >podman logs -f web
    * Open a web brower and go to *http://localhost:8888*
