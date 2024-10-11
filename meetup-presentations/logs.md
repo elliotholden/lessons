@@ -58,3 +58,51 @@ default on my Linux/Unix machines.
 * Go back to the first terminal window and use the **exec** command to restart the webserver
 
   *Again, notice there is activity in the logs*
+
+### Solution
+* Shell into the __official-httpd__ container using the __exec__ command and inspec the contents of */etc/httpd/conf/httpd.conf*
+
+  >podman exec -it offical-httpd bash
+
+  >vi /etc/httpd/conf/httpd.conf
+
+     *Notice that both __CustomLog__ and __ErrorLog__ and being piped into /usr/bin/cat*
+
+
+          ErrorLog |/usr/bin/cat
+
+          #
+          # LogLevel: Control the number of messages logged to the error_log.
+          # Possible values include: debug, info, notice, warn, error, crit,
+          # alert, emerg.
+          #
+          LogLevel warn
+
+          <IfModule log_config_module>
+          #
+          # The following directives define some format nicknames for use with
+          # a CustomLog directive (see below). 
+          #
+          LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+          LogFormat "%h %l %u %t \"%r\" %>s %b" common
+
+          <IfModule logio_module>
+               # You need to enable mod_logio.c to use %I and %O
+               LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+          </IfModule>
+
+          #
+          # The location and format of the access logfile (Common Logfile Format).
+          # If you do not define any access logfiles within a <VirtualHost>
+          # container, they will be logged here.  Contrariwise, if you *do*
+          # define per-<VirtualHost> access logfiles, transactions will be 
+          # logged therein and *not* in this file.
+          #
+          #CustomLog "logs/access_log" common
+
+          #
+          # If you prefer a logfile with access, agent, and referer information
+          # (Combined Logfile Format) you can use the following directive.
+          #
+          CustomLog |/usr/bin/cat combined
+     </IfModule>
