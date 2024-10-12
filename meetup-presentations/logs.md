@@ -117,6 +117,9 @@ default on my Linux/Unix machines.
           CustomLog |/usr/bin/cat combined
      </IfModule>
 
+__TIP:__ You can also get the location of the logs by using the following command...
+>httpd -S | grep -i log
+
 ### Extra
 
 * For extra credit, run the Official Docker version of Apache and inspect the log files from within the container to see how logging has been implemented in this image.
@@ -145,7 +148,7 @@ default on my Linux/Unix machines.
           root@f5fcd6f5488d:/usr/local/apache2/conf# 
 
 __TIP:__ From the command inside the container you can also use the following command to get the same results:
->httpd -S
+>httpd -S | grep -i log
 
 __NOTE:__ In some configurations you may see that there are symlinks in /var/log/httpd pointing to /dev/stdout and /dev/stderr
 
