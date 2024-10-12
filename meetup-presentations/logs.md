@@ -54,7 +54,7 @@ default on my Linux/Unix machines.
 
   *Notice there is an **ERROR** in the browser and no page is displayed. Also there is no activity in the logs.*
 
-  *Troubleshoot the issue and create a new container if necesssary.*  **HINT**: use the **ss --pant** command to see which port the server is actually running on.
+  *Troubleshoot the issue and create a new container if necesssary.*  **HINT**: use the **ss -pant** command to see which port the server is actually running on.
 
 * After fixing the issue, again run the following a terminal:
   >pomdan logs redhat-httpd.
