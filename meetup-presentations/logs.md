@@ -52,9 +52,20 @@ default on my Linux/Unix machines.
 
 * Open a web brower and go to *http://localhost:7777*. Refresh the page a couple of times.
 
-  *Notice there is activity in the logs*
+  *Notice there is an **ERROR** in the browser and no page is displayed. Also there is no activity in the logs.*
 
-* Go back to the first terminal window and use the **exec** command to restart the webserver
+  *Troubleshoot the issue and create a new container if necesssary.*  **HINT**: check the use the **ss --pant** command to see which port the server is actually running on.
+
+* After fixing the issue, again run the following a terminal:
+  >pomdan logs redhat-httpd.
+
+* Open a web brower and go back to *http://localhost:7777*. Refresh the page a couple of times.
+
+  *You should now see activity in the __podman logs__*
+
+* In another terminal (leave the terminal that is __podman logs__ open) use the **exec** command to restart the httpd webserver on the __redhat-httpd__ container.
+
+  >podman exec redhat-httpd sh -c 'httpd -k restart'
 
   *Again, notice there is activity in the logs*
 
