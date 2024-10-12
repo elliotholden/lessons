@@ -144,6 +144,9 @@ default on my Linux/Unix machines.
           crw--w----. 1 root tty 136, 0 Oct 11 11:04 /dev/pts/0
           root@f5fcd6f5488d:/usr/local/apache2/conf# 
 
+__TIP:__ From the command inside the container you can also use the following command to get the same results:
+>httpd -S
+
 __NOTE:__ In some configurations you may see that there are symlinks in /var/log/httpd pointing to /dev/stdout and /dev/stderr
 
      /var/log/httpd/access_log -> /dev/stdout  
