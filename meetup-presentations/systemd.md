@@ -4,3 +4,4 @@
              Also it will teach the concept and purpose of the __loginctl enable-linger__ command.
 
 
+1. Login to your linux machine under your normal user account or as root. If logging in as a regular user make sure you have __sudo__ privileges.
