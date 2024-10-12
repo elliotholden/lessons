@@ -155,4 +155,4 @@ __NOTE:__ In some configurations you may see that there are symlinks in /var/log
      /var/log/httpd/access_log -> /dev/stdout  
      /var/log/httpd/error_log -> /dev/stderr
 
-*In this scenario __/dev/stdout__ and __/dev/stderr__ may both point to __/proc/self/fd/1__ and __/proc/self/fd/2__ respectively wich, again, both point to __/dev/pts0__*
+*In this scenario __/dev/stdout__ and __/dev/stderr__ may both point to __/proc/self/fd/1__ and __/proc/self/fd/2__ respectively which, again, both point to __/dev/pts0__*
