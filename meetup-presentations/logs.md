@@ -1,4 +1,5 @@
 # {Container} Logs
+by Elliot Holden - elliot@ElliotMyWebGuy.com
 
 **Purpose:** The purpose of this lab is to demonstrate how the **[podman|docker] logs** command is actually working.
 
