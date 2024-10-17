@@ -20,16 +20,36 @@ __Purpose:__  Show how __Podman__ can be used to generate a __Systemd user file_
 
 5. Create a Containerfile that uses docker.io/library/nginx as it's base image
 
-        FROM docker.io/library/nginx
+        FROM docker.io/library/nginx \
         LABEL maintainer="Your Name <your@emailaddress.com>"
               description="Systemd Lab"
 
     >podman build -t custom-nginx .
 
+    * At this point, running __podman images__ should show the container: __localhost/custom-nginx latest__ in the results.
+
 6. Next run a registry container over port 5000.
 
         podman run -d -p 5000:5000 --name registry docker.io/library/registry
 
-5. As __nina__ run the container over port 8888. Make sure to included the __io.containers.autoupdate=registry__ when running the container.
+7. Updload the __custom-nginx__ image to your registry
 
-        podman run -d -p 8888:8080 --name nginx docker.io/library/nginx
+        podman push custom-nginx localhost:5000/custom-nginx
+        
+    __NOTE:__ You may get the following error
+
+   >*Error: trying to reuse blob sha256:98b5f35ea9d3eca6ed1881b5fe5d1e02024e1450822879e4c13bb48c9386d0ad at destination: pinging container registry localhost:5000: Get "https://localhost:5000/v2/": http: server gave HTTP response to HTTPS client*
+
+   In which case you will need to add the __--tls-verify=false__ option to the __podman push__ command. To make behavior persistant you need to create a file **similar to /etc/containers/registries.conf.d/my-registry.conf** with the contents:
+
+        [[registry]] 
+        location = localhost:5000
+        insecure = true
+
+8. Remove the localhost/custom-nginx container
+
+        podman rmi localhost/custom-nginx
+
+8. As __nina__ run the customer-nginx container from registry you created over port 8888. Make sure to included the __io.containers.autoupdate=registry__ when running the container.
+
+        podman run -d -p 8888:8080 --name nginx localhost:5000/nginx
