@@ -6,6 +6,8 @@ __Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a 
 * Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
 
 * After that we will see how to make resetart automatically using the --
+
+
 ## loginctl [enable-linger]
 To start with, we will first examine the workings of __loginctl__ and it's subcommand __enable-linger__
 
@@ -70,6 +72,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
 
 10. Lastly, restart the server. And try to access the web page http://localhost:7777 - notice that the web service of offline again. This is because we have not enable a restart policy. Let us see how to enable automatic restarts in the next section.
 
+
 ## podman run --restart always
 Taking up where we left off in the last section lets enable the __podman-restart__ systemd service and update our container with the __--restart always__ option.
 
@@ -114,13 +117,15 @@ Now that we have seen how user the Linger property of the __loginctl__ command a
 
         podman update --restart never nginx 
 
-3. Mack sure the following directoy structure exists: __.confg/systemd/user__ 
+3. Mack sure the following directoy structure exists: __~/.confg/systemd/user__ 
 
         mkdir -p ~/.config/systemd/user
 
 4. Change into the newly created directory and run the __podman generate systemd__ command to create the Systemd unit file. Then reload the Systemd daemon.
 
         podman generate systemd --name --new --files nginx
+
+   >__NOTE__: View the __podman generate system --help__ to learn what the differenct options will do (--name, --new, --files)
 
         systemctl --user daemon-reload
 
@@ -129,7 +134,7 @@ Now that we have seen how user the Linger property of the __loginctl__ command a
         systemctl --user enable --now container-nginx.service
 
 
-## Registry
+## Registry !!!!! This section is under contstruction !!!!!
 
 6. Next run a registry container over port 5000.
 
