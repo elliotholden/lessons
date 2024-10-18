@@ -1,7 +1,9 @@
 # {Systemd} user units
 by Elliot Holden - elliot@ElliotMyWebGuy.com
 
-__Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage your containers runtime. You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system.
+__Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage a container's runtime. You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system.
+
+Before delving into Systed we will first look at the *linger* feature of the **loginctl** command to understand how to make command started by one user, *linger* around, even if the user is not logged in. This iwll come in handy when containers started by a particular user needs to be persistant regardless of the user's login status.
 
 1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
 
