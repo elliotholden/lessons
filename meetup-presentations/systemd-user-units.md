@@ -51,11 +51,11 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
 
         podman run -d --name nginx -p 7777:80 docker.io/library/nginx
 
-7. Open a web browser and view the page at: http://localhost:7777
+6. Open a web browser and view the page at: http://localhost:7777
 
-8. After confirming the nginx default page, exit out of the SSH session for __jeff__ and try to vew the webpage again: http://localhost:7777 - notice it does not display. That is because exiting out of the __jeff__ users SSH session has also killed the container process that __jeff__ started. *Processes* that __jeff__ has started do not automatically *linger* around when he is not logged in.
+7. After confirming the nginx default page, exit out of the SSH session for __jeff__ and try to vew the webpage again: http://localhost:7777 - notice it does not display. That is because exiting out of the __jeff__ users SSH session has also killed the container process that __jeff__ started. *Processes* that __jeff__ has started do not automatically *linger* around when he is not logged in.
 
-9. Now SSH back into localhost as __jeff__, enable the LINGER feature of __loginctl__ and restart the __nginx__ container.
+8. Now SSH back into localhost as __jeff__, enable the LINGER feature of __loginctl__ and restart the __nginx__ container.
 
         ssh jeff@localhost
 
@@ -65,7 +65,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
         
    >__NOTE:__ A *username* can also be supplied as an argument to the __loginctl enable-linger__ command. In our example, it is ommitted because the *username* argument defaults to the *username* of the person who is running the command. The same goes with not having to be __root__ to run the command because we automatically have permission to run the command on ourself.
 
-10. Lastly, exit out the the user __jeff's__ SSH session. Attempt access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
+9. Lastly, exit out the the user __jeff's__ SSH session. Attempt access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
 
 ### Systemd
 1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
