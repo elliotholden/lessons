@@ -26,7 +26,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
     |---|---|---|---|
     |502|elliot|yes|active|
 
-   >This is because __loginctl__ shows the users whow are *logged in*. And since you became the user __jeff__ by opening a sub shell (*sudo su - jeff*), the user __jeff__ does not show in the output of the __loginctl__ command
+   >This is because __loginctl__ shows the users who are *logged in*. And since you became the user __jeff__ by opening a sub shell (*sudo su - jeff*), the user __jeff__ does not show in the output of the __loginctl__ command
 
 3. Exit out of the sub shell, create a password for __jeff__, and this time *login* as __jeff__ by SSH'ing to localhost.
 
@@ -45,7 +45,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
     |502|elliot|yes|active|
     |1001|jeff|no|active
 
-   This time __jeff__ shows up in the output the his LINGER status is set to __no__. Now let us examine the effects of __jeff's__ LINGER status being set to __no__.
+   This time __jeff__ shows up in the output but his LINGER status is set to __no__. Now let us examine the effects of __jeff's__ LINGER status being set to __no__.
 
 5. As __jeff__, run an nginx container while exposing port 7777 to your host system.
 
