@@ -73,6 +73,34 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
 ### podman run --restart always
 Taking up where we left off in the last section lets enable the __podman-restart__ systemd service and update our container with the __--restart always__ option.
 
+1. Enable __podman-restart.service__
+
+        systemctl --user enable --now podman-restart.service
+        
+
+2. View the nginx container's current restart policy.
+
+   __Method 1__ 
+
+        podman inspect --format {{.HostConfig.RestartPolicy}} nginx
+
+   __Method 2__
+
+        podman inspect nginx | jq .[].HostConfig.RestartPolicy
+
+
+
+3. Update nginx container with *--restart always*
+
+        podman update --restart always nginx
+
+4. Make sure the nginx container is running and restart your server
+
+        podman start nginx
+
+        sudo systemctl reboot now
+
+5. Finally access the web service and notice that it should be running: http://localhost:7777
 ### Systemd
 1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
 
