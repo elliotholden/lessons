@@ -6,7 +6,7 @@ __Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a 
 * Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
 
 * After that we will see how to make resetart automatically using the --
-### loginctl [enable-linger]
+## loginctl [enable-linger]
 To start with, we will first examine the workings of __loginctl__ and it's subcommand __enable-linger__
 
 1. Login to your Linux system as yourself and create a new user named __jeff__.
@@ -70,7 +70,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
 
 10. Lastly, restart the server. And try to access the web page http://localhost:7777 - notice that the web service of offline again. This is because we have not enable a restart policy. Let us see how to enable automatic restarts in the next section.
 
-### podman run --restart always
+## podman run --restart always
 Taking up where we left off in the last section lets enable the __podman-restart__ systemd service and update our container with the __--restart always__ option.
 
 1. Enable __podman-restart.service__
@@ -101,31 +101,35 @@ Taking up where we left off in the last section lets enable the __podman-restart
         sudo systemctl reboot now
 
 5. Finally access the web service and notice that it should be running: http://localhost:7777
-### Systemd
-1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
 
-2.  Create a new linux user named __nina__ and give the user a password of *__password__*
 
-        sudo useradd nina && sudo passwd nina
-3. __ssh__ into localhost as __nina__
-        
-        ssh nina@localhost
+## Systemd
+Now that we have seen how user the Linger property of the __loginctl__ command and restart a container automatically with the __podman-restart__ service, let's look at managing our container's runtime with Systemd. We will use the __podman generate__ command to accomplish this task. For this task we can stop the __podman-retart__service since managing our container's runtime as a Systemd service will allow it to restart automatically as long as we __enable_ it.
 
-    > __NOTE:__ *As root you may need to enable PasswordAuthentication in __/etc/ssh/sshd_config.d/40-disable-passwords.conf__* or the main __sshd_config__ file before you can ssh in with a password.
+1. Login to your server as the user __jeff__ and stop the __podman-restart__service. 
 
-4. Create the directoy structure __.confg/systemd/user__ if it does not already exist.
+        systemctl --user disable --now systemctl podman-restart.service
+
+2. Also remove the restart policy from the container since this will not be needed as well. 
+
+        podman update --restart never nginx 
+
+3. Mack sure the following directoy structure exists: __.confg/systemd/user__ 
 
         mkdir -p ~/.config/systemd/user
 
-5. Create a Containerfile that uses docker.io/library/nginx as it's base image
+4. Change into the newly created directory and run the __podman generate systemd__ command to create the Systemd unit file. Then reload the Systemd daemon.
 
-        FROM docker.io/library/nginx \
-        LABEL maintainer="Your Name <your@emailaddress.com>"
-              description="Systemd Lab"
+        podman generate systemd --name --new --files nginx
 
-    >podman build -t custom-nginx .
+        systemctl --user daemon-reload
 
-    * At this point, running __podman images__ should show the container: __localhost/custom-nginx latest__ in the results.
+5. Next, enable the newly created Systemd service.
+
+        systemctl --user enable --now container-nginx.service
+
+
+## Registry
 
 6. Next run a registry container over port 5000.
 
