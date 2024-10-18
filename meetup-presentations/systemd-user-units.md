@@ -3,8 +3,53 @@ by Elliot Holden - elliot@ElliotMyWebGuy.com
 
 __Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage a container's runtime. You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system.
 
-Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make command started by one user, *linger* around, even if the user is not logged in. This iwll come in handy when containers started by a particular user needs to be persistant regardless of the user's login status.
+Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
 
+### loginctl [enable-linger]
+To start with, we will first examine the workings of __loginctl__ and it's subcommand __enable-linger__
+
+1. Login to your Linux system as yourself and create a new user named __jeff__.
+
+        sudo useradd jeff
+
+   Switch to this new user
+
+        sudo su - jeff
+
+2. As __jeff__ run the __loginctl list-users__ command.
+
+        loginctl list-users
+
+   >At this point the output only shows *your* username and not __jeff__.
+
+    |UID|USER|LINGER|STATE|
+    |---|---|---|---|
+    |502|elliot|yes|active|
+
+   >This is because __loginctl__ shows the users whow are *logged in*. And since you became the user __jeff__ by opening a sub shell (*sudo su - jeff*), the user __jeff__ does not show in the output of the __loginctl__ command
+
+3. Exit out of the sub shell, create a password for __jeff__, and this time *login* as __jeff__ by SSH'ing to localhost.
+
+        sudo passwd jeff
+
+        ssh jeff@localhost
+
+    > __NOTE:__ *As root, you may need to enable PasswordAuthentication in __/etc/ssh/sshd_config.d/40-disable-passwords.conf__* or the main __sshd_config__ file before you can ssh in with a password.
+
+4. After logging in as __jeff__ run the __loginctl__ command again.
+
+        loginctl list-users
+
+    |UID|USER|LINGER|STATE|
+    |---|---|---|---|
+    |502|elliot|yes|active|
+    |1001|jeff|no|active
+
+   This time __jeff__ shows up in the output the his LINGER status is set to __no__.
+
+
+
+### Systemd
 1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
 
 2.  Create a new linux user named __nina__ and give the user a password of *__password__*
