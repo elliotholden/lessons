@@ -1,7 +1,7 @@
 # {Systemd} user units
 by Elliot Holden - elliot@ElliotMyWebGuy.com
 
-__Purpose:__  Show how __Podman__ can be used to generate a __Systemd user file__ to start your containers. You will also learn how to automatically update Systemd managed containers.
+__Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage your containers runtime. You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system.
 
 1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
 
@@ -54,6 +54,6 @@ __Purpose:__  Show how __Podman__ can be used to generate a __Systemd user file_
 
         podman rmi localhost/custom-nginx
 
-8. As __nina__ run the customer-nginx container from the registry you created over port 8888. Make sure to included the __io.containers.autoupdate=registry__ when running the container.
+8. As __nina__ run the custom-nginx container from the registry you created over port 8888. Make sure to included the __io.containers.autoupdate=registry__ when running the container.
 
         podman run -d -p 8888:8080 --name nginx localhost:5000/nginx
