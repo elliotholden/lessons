@@ -3,8 +3,9 @@ by Elliot Holden - elliot@ElliotMyWebGuy.com
 
 __Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage a container's runtime. You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system.
 
-Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
+* Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
 
+* After that we will see how to make resetart automatically using the --
 ### loginctl [enable-linger]
 To start with, we will first examine the workings of __loginctl__ and it's subcommand __enable-linger__
 
@@ -65,7 +66,12 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
         
    >__NOTE:__ A *username* can also be supplied as an argument to the __loginctl enable-linger__ command. In our example, it is ommitted because the *username* argument defaults to the *username* of the person who is running the command. The same goes with not having to be __root__ to run the command because we automatically have permission to run the command on ourself.
 
-9. Lastly, exit out the the user __jeff's__ SSH session. Attempt access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
+9. Now exit out the the user __jeff's__ SSH session. Attempt access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
+
+10. Lastly, restart the server. And try to access the web page http://localhost:7777 - notice that the web service of offline again. This is because we have not enable a restart policy. Let us see how to enable automatic restarts in the next section.
+
+### podman run --restart always
+Taking up where we left off in the last section lets enable the __podman-restart__ systemd service and update our container with the __--restart always__ option.
 
 ### Systemd
 1. Login to to any Linux system where __systemd__ is installed (Red Hat, AlmaLinux, Rocky Linux etc.) 
