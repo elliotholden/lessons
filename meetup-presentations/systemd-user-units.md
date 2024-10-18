@@ -5,7 +5,7 @@ __Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a 
 
 * Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
 
-* After that we will see how to make resetart automatically using the --
+* After that we will see how to restart the container automatically using the __--restart__ flag
 
 
 ## loginctl [enable-linger]
