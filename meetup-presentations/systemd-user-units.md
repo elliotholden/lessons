@@ -116,7 +116,7 @@ Now that we have seen how to use the Linger property of the __loginctl__ command
 
 1. Login to your server as the user __jeff__ and stop the __podman-restart__ service. 
 
-        systemctl --user disable --now systemctl podman-restart.service
+        systemctl --user disable --now podman-restart.service
 
 2. Also remove the restart policy from the container since this will not be needed as well. 
 
