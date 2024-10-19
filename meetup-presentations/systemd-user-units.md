@@ -70,16 +70,19 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
 
 9. Now exit out the the user __jeff's__ SSH session. Attempt access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
 
-10. Lastly, restart the server. And try to access the web page http://localhost:7777 - notice that the web service of offline again. This is because we have not enable a restart policy. Let us see how to enable automatic restarts in the next section.
+10. Lastly, restart the container engine's *host* server (or the guest virtual machine you are running podman inside). And try to access the web page http://localhost:7777 - notice that the web service if offline again. This is because we have not enable a restart policy for the nginx container. Let us see how to enable automatic restarts in the next section.
 
 
 ## podman run --restart always
 Taking up where we left off in the last section lets enable the __podman-restart__ systemd service and update our container with the __--restart always__ option.
 
-1. Enable __podman-restart.service__
+1. Make sure you are logged in as __jeff__ and enable __podman-restart.service__
 
         systemctl --user enable --now podman-restart.service
-        
+
+   >Alternatively you can log as root or a user with sudo privileges and run the following:
+
+        systemctl enable --now podman-restart.service
 
 2. View the nginx container's current restart policy.
 
