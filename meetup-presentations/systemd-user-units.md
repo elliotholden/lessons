@@ -82,7 +82,7 @@ Taking up where we left off in the last section lets enable the __podman-restart
 
    >Alternatively you can login as root or a user with sudo privileges and run the following:
 
-        systemctl enable --now podman-restart.service
+        sudo systemctl enable --now podman-restart.service
 
 2. View the nginx container's current restart policy.
 
