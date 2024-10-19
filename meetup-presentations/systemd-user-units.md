@@ -110,7 +110,7 @@ Taking up where we left off in the last section lets enable the __podman-restart
 
 
 ## Systemd
-Now that we have seen how user the Linger property of the __loginctl__ command and restart a container automatically with the __podman-restart__ service, let's look at managing our container's runtime with Systemd. We will use the __podman generate__ command to accomplish this task. For this task we can stop the __podman-retart__service since managing our container's runtime as a Systemd service will allow it to restart automatically as long as we __enable_ it.
+Now that we have seen how to use the Linger property of the __loginctl__ command and restart a container automatically with the __podman-restart__ service, let's look at managing our container's runtime with Systemd. We will use the __podman generate__ command to accomplish this task. For this task we can stop the __podman-retart__service since managing our container's runtime as a Systemd service will allow it to restart automatically as long as we __enable_ it.
 
 1. Login to your server as the user __jeff__ and stop the __podman-restart__service. 
 
@@ -135,6 +135,8 @@ Now that we have seen how user the Linger property of the __loginctl__ command a
 5. Next, enable the newly created Systemd service.
 
         systemctl --user enable --now container-nginx.service
+
+6. Verify the website service is back online by goint to http://localhost:7777
 
 
 ## Registry !!!!! This section is under contstruction !!!!!
