@@ -80,7 +80,7 @@ Taking up where we left off in the last section lets enable the __podman-restart
 
         systemctl --user enable --now podman-restart.service
 
-   >Alternatively you can log as root or a user with sudo privileges and run the following:
+   >Alternatively you can login as root or a user with sudo privileges and run the following:
 
         systemctl enable --now podman-restart.service
 
