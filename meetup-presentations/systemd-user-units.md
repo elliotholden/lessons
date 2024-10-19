@@ -97,6 +97,8 @@ Taking up where we left off in the last section lets enable the __podman-restart
 3. Update nginx container with *--restart always*
 
         podman update --restart always nginx
+        
+   >__NOTE:__ The **--restart** flag is present in *podman version 5.2.2* but appears to be missing in previous versions. I have verified that it does not exist in *4.9.5* and *4.9.4*.
 
 4. Make sure the nginx container is running and restart the host server
 
