@@ -94,17 +94,17 @@ Taking up where we left off in the last section lets enable the __podman-restart
 
         podman inspect nginx | jq .[].HostConfig.RestartPolicy
 
-
-
 3. Update nginx container with *--restart always*
 
         podman update --restart always nginx
 
-4. Make sure the nginx container is running and restart your server
+4. Make sure the nginx container is running and restart the host server
 
         podman start nginx
 
         sudo systemctl reboot now
+
+   >__NOTE:__ *If you have not given sudo privileges to the user __jeff__, you need to exit out of the local SSH session for __jeff__ and make sure you are logged in with a user that has __sudo__ privileges in order to peform the reboot.*
 
 5. Finally access the web service and notice that it should be running: http://localhost:7777
 
@@ -139,13 +139,13 @@ Now that we have seen how user the Linger property of the __loginctl__ command a
 
 ## Registry !!!!! This section is under contstruction !!!!!
 
-6. Next run a registry container over port 5000.
+6. Next, as __jeff__ run a registry container over port 5000.
 
-        podman run -d -p 5000:5000 --name registry docker.io/library/registry
+        podman run -d -p 5000:5000 --name registry --restart always docker.io/library/registry
 
-7. Updload the __custom-nginx__ image to your registry
+7. Updload the __nginx__ image to your newly created registry.
 
-        podman push custom-nginx localhost:5000/custom-nginx
+        podman push nginx localhost:5000/nginx
         
     __NOTE:__ You may get the following error
 
@@ -153,7 +153,7 @@ Now that we have seen how user the Linger property of the __loginctl__ command a
 
    In which case you will need to add the __--tls-verify=false__ option to the __podman push__ command.
 
-        podman push --tls-verify=false custom-nginx localhost:5000/custom-nginx
+        podman push --tls-verify=false nginx localhost:5000/nginx
 
    Alternatively, you could create a file similar to **/etc/containers/registries.conf.d/my-registry.conf** with the contents:
 
@@ -161,10 +161,14 @@ Now that we have seen how user the Linger property of the __loginctl__ command a
         location = localhost:5000
         insecure = true
 
-8. Remove the localhost/custom-nginx container
+8. Remove the localhost/nginx container
 
-        podman rmi localhost/custom-nginx
+        podman rmi localhost/nginx
 
-8. As __nina__ run the custom-nginx container from the registry you created over port 8888. Make sure to included the __io.containers.autoupdate=registry__ when running the container.
+   Notice we are removing the container image located at ***localhost/nginx*** and not ***localhost:5000/nginx*** (our newly create registry *service*). The difference is that ***localhost/nginx*** image is "local" (on the host sytstem running our podman container engine). Whereas, in a real world application, ***localhost:5000/nginx*** would be a *remote* service (named something like __registry.my-company.io__)
 
-        podman run -d -p 8888:8080 --name nginx localhost:5000/nginx
+8. As __jeff__, stop the currently running nginx container and run it again from the registry you just created. Expose port 8888 in the process. Make sure to include the label __io.containers.autoupdate=registry__ when running the container.
+        
+        podman stop nginx
+-
+        podman run -d -p 8888:8080 --name nginx --label "io.containers.autoupdate=registry" localhost:5000/nginx
