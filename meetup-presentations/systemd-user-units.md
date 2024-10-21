@@ -138,7 +138,9 @@ Now that we have seen how to use the Linger property of the __loginctl__ command
 
         systemctl --user enable --now container-nginx.service
 
-6. Verify the website service is back online by goint to http://localhost:7777
+6. Verify the website service is back online by going to http://localhost:7777
+
+7. Restart the host system and verify the service comes back online by going to http://localhost:7777
 
 
 ## Registry !!!!! This section is under contstruction !!!!!
