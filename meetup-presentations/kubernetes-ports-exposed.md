@@ -16,7 +16,7 @@ To start with, we will first deploy an nginx application
 
         kubectl get pods
 
-        kubectl exec web-564d578c4-9b4wt -- curl s localhost:80
+        kubectl exec web-564d578c4-9b4wt -- curl -s localhost:80
 
       >In the previous command, make sure to replace **web-564d578c4-9b4wt** with the actual name of one of the pods returned in the **kubectl get pods** command
 
