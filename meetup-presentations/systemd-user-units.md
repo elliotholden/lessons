@@ -1,11 +1,13 @@
 # {Systemd} user units
 by Elliot Holden - elliot@ElliotMyWebGuy.com
 
-__Purpose:__ This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage a container's runtime. You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system.
+__Purpose:__ (1) This lab will demonstrate how __Podman__ can be used to generate a __Systemd user file__ which can be used to manage a container's runtime. When using Systemd to manage a container's runtime the __enable__ subcommand of the __systemctl__ command can be employed to make sure that the container restarts on reboot of the host system. (2) You will also learn how to automatically update Systemd managed containers (*by using the __io.containers.autoupdate__ lable when initially running a container*). 
 
-* Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
+* Please note that these are 2 differenct ways (__Systemd__ vs __io.containers.autoupdate__ label) to achieved the same goal, which is to have the _container_ automatically start when the _host_ system restarts. 
 
-* After that we will see how to restart the container automatically using the __--restart__ flag
+Before delving into Systemd we will first look at the *linger* feature of the **loginctl** command to understand how to make a command started by one user, *linger* around, even if the user is not logged in. This will come in handy when containers started by a particular user need to be persistant regardless of the user's login status.
+
+ After that we will see how to restart the container automatically using the __--restart__ flag
 
 
 ## loginctl [enable-linger]
@@ -29,7 +31,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
     |---|---|---|---|
     |502|elliot|yes|active|
 
-   >This is because __loginctl__ shows the users who are *logged in*. And since you became the user __jeff__ by opening a sub shell (*sudo su - jeff*), the user __jeff__ does not show in the output of the __loginctl__ command
+   >This is because __loginctl__ shows the users who are *logged in*. And since you became the user __jeff__ by opening a sub shell (*sudo su - jeff*) and NOT by actually loging in as __jeff__ (*through SSH or the Console*), the user __jeff__ does not show in the output of the __loginctl__ command
 
 3. Exit out of the sub shell, create a password for __jeff__, and this time *login* as __jeff__ by SSH'ing to localhost.
 
@@ -56,7 +58,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
 
 6. Open a web browser and view the page at: http://localhost:7777
 
-7. After confirming the nginx default page, exit out of the SSH session for __jeff__ and try to vew the webpage again: http://localhost:7777 - notice it does not display. That is because exiting out of the __jeff__ users SSH session has also killed the container process that __jeff__ started. *Processes* that __jeff__ has started do not automatically *linger* around when he is not logged in.
+7. After confirming the nginx default page, exit out of the SSH session for __jeff__ and try to vew the webpage again: http://localhost:7777 - notice it does not display. That is because exiting out of the __jeff__ user SSH session has also killed the container process that __jeff__ started. *Processes* that __jeff__ has started do not automatically *linger* around after __jeff__ has logged out.
 
 8. Now SSH back into localhost as __jeff__, enable the LINGER feature of __loginctl__ and restart the __nginx__ container.
 
@@ -68,7 +70,7 @@ To start with, we will first examine the workings of __loginctl__ and it's subco
         
    >__NOTE:__ A *username* can also be supplied as an argument to the __loginctl enable-linger__ command. In our example, it is ommitted because the *username* argument defaults to the *username* of the person who is running the command. The same goes with not having to be __root__ to run the command because we automatically have permission to run the command on ourself.
 
-9. Now exit out the the user __jeff's__ SSH session. Attempt access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
+9. Now exit out the the user __jeff's__ SSH session. Attempt to access the page: http://localhost:7777 - notice that it is succeful. Check the __loginctl list-users__ command and notice that __jeff's__ LINGER status is set to ***yes*** and his STATE says ***lingering***.
 
 10. Lastly, restart the container engine's *host* server (or the guest virtual machine you are running podman inside). And try to access the web page http://localhost:7777 - notice that the web service if offline again. This is because we have not enable a restart policy for the nginx container. Let us see how to enable automatic restarts in the next section.
 
@@ -130,7 +132,7 @@ Now that we have seen how to use the Linger property of the __loginctl__ command
 
         podman generate systemd --name --new --files nginx
 
-   >__NOTE__: View the __podman generate system --help__ to learn what the differenct options will do (--name, --new, --files)
+   >__NOTE__: View the __podman generate systemd --help__ to learn what the differenct options will do (--name, --new, --files)
 
         systemctl --user daemon-reload
 
