@@ -52,7 +52,7 @@ To start with, we will first deploy an nginx application
 
         kubectl get pods -o wide
 
-9. Get the clusterIP address of the __web-svc__ serviceby using __get service__
+9. Get the clusterIP address of the __web-svc__ service by using __get service__
 
         kubectl get svc
 
