@@ -38,7 +38,7 @@ To start with, we will first deploy an nginx application
 
         kubectl apply -f web.yaml
 
-    > It's very important that you initially used the __--save-config__ with the __create__ command in STEP #1 (I'ts not necessarily required in STEP #5). This is because the __apply__ command requires that the initial deployment was created using the __--save-config__ option of the __create__ command or using the __apply__ command. Examine ___kubectl apply deploy -h___ for details.
+    > It's very important that you initially used the __--save-config__ with the __create__ command in STEP #1 (I'ts not necessarily required in STEP #5). This is because the __apply__ command in STEP #6 requires that the initial deployment was created using the __--save-config__ option of the __create__ command or using the __apply__ command. Examine ___kubectl apply deploy -h___ for details.
 
 7. Run STEP #3 again 
 
