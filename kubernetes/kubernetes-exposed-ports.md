@@ -12,7 +12,7 @@ To start with, we will first deploy an nginx application
 
         kubectl create -f web.yaml
 
-2. Use __kubectl__ to check one of the pods and make sure **nginx** is actually running. *(HINT: You can also SSH into one fo the cluster nodes and use the ***docker***, __crictl__, or __nsenter__ commands)*
+2. Use __kubectl__ to check one of the pods and make sure **nginx** is actually running. *(HINT: You can also SSH into one of the cluster nodes and use the ***docker***, __crictl__, or __nsenter__ commands)*
 
         kubectl get pods
 
@@ -24,7 +24,7 @@ To start with, we will first deploy an nginx application
 
         kubectl expose deploy web --name web-svc 
 
-   >Notice you have an **error: couldn't find port via --port flag or introspection**. The __expose__ command requires the  __--port__ option and if missing, will use the __port__ defined in the __deployment__. But you did not define a port with __--port__ when you initially created the the deployment. Thus you are gettign the error. 
+   >Notice you have an **error: couldn't find port via --port flag or introspection**. The __expose__ command requires the  __--port__ option and if missing, will use the __port__ defined in the __deployment__. But you did not define a port with __--port__ when you initially created the the deployment. Thus you are getting the error. 
 
 4. Used the __describe__ command to verify there is no __port__ defined in the deployment
 
