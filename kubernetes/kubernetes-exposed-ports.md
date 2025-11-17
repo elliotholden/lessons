@@ -6,7 +6,7 @@ __Purpose:__ This lab will demonstrate how Kubernetes ports are exposed and publ
 ## ClusterIP Lab
 To start with, we will first deploy an nginx application
 
-1. Create a deployment called __web__ with *3 replicas* using the *nginx* docker image. Do not used the ___--port___ flag. Also used the declaritive form to create this deployment. Make sure to use the ***--save-config*** option
+1. Create a deployment called __web__ with *3 replicas* using the *nginx* docker image. Do not used the ___--port___ flag. Also use the declaritive form to create this deployment. Make sure to use the ***--save-config*** option
 
         kubectl create deploy web --image=docker.io/library/nginx --replicas=3 --save-config=true -o yaml --dry-run=client > web.yaml
 
