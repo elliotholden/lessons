@@ -60,14 +60,13 @@ To start with, we will first deploy an nginx application
 
         minikube ssh -n devops-m03
 
+    > Make sure to use one of the actual node names from *your* result of running ***get nodes*** and NOT my example node name: ***devops-m03***
+
 11. Try to acces the nginx service using the __ClusterIP__ over port __7480__ (*use __telnet__ or __curl__ to test*). 
 
         curl 43.53.1.3:7480
 
-   Notice you are getting an error
-
-      
-   > Make sure to use one of the actual node names from *your* result of running ***get nodes*** and NOT my example node name: ***devops-m03***
+      Notice you are getting an error
 
 9. Describe the __web-svc__ service to see the issue. Use __kubectl edit__ to fix the issue
 
