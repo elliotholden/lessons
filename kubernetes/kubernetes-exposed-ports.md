@@ -30,7 +30,7 @@ To start with, we will first deploy an nginx application
 
         kubectl describe deploy web
 
-5. Edit the declarative file you created in STEP #1, adding port __7480__ to the file. 
+5. Edit the __web.yaml__ declarative file you created in STEP #1, adding port __7480__ to the file. 
 
    >__HINT__: If you don't know the correct syntax to add to the file you can just re-run the __create__ command from STEP #1, but this time using the __--port__ option.
 
