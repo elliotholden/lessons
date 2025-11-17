@@ -46,17 +46,28 @@ To start with, we will first deploy an nginx application
 
       >Notice you get no errors... why? HINT: use *__kubectl expose -h__* to see why. Search for the string: ***--port=''*** inside the help and notice it says: *"Copied from the resource being exposed, if unspecified"*. The resource, which is the __web__ deployment now has a __port__, that you added in STEP #5. The __expose__ command uses this __port__ by default.
 
-8. SSH into one of the culster nodes and try to acces the nginx service using the __ClusterIP__ over port __7480__ (*use __telnet__ or __curl__ to test*). HINT: To get the __node names__ of one of the cluster nodes you can use the kubectl ***get nodes*** or ***get pods*** command. To get the clusterIP address use __get service__
+8.  Get the __node name__ of one of the cluster nodes. You can use the kubectl ***get nodes*** or ***get pods*** command.
 
         kubectl get nodes
 
         kubectl get pods -o wide
 
+9. Get the clusterIP address of the __web-svc__ serviceby using __get service__
+
         kubectl get svc
 
+10. SSH into one of the culster nodes. It doesn't matter *which* cluster node you SSH into. The cluster IP reachable from any node.
+
         minikube ssh -n devops-m03
+
+11. Try to acces the nginx service using the __ClusterIP__ over port __7480__ (*use __telnet__ or __curl__ to test*). 
+
+        curl 43.53.1.3:7480
+
+   Notice you are getting an error
+
       
-      >Make sure to use one of the actual node names from *your* result of running ***get nodes*** and NOT my example node name: ***devops-m03***
+   > Make sure to use one of the actual node names from *your* result of running ***get nodes*** and NOT my example node name: ***devops-m03***
 
 9. Describe the __web-svc__ service to see the issue. Use __kubectl edit__ to fix the issue
 
