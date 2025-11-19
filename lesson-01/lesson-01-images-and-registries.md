@@ -8,24 +8,42 @@ To run a container you need a container runtime environment such as __containerd
 
 To install Podman do one of the following based on your operatring system
 
+#### Excercise 1.a
+
 Ubuntu / Debain
 
-        sudo apt install podman
+    sudo apt install podman
 
 Red Hat / CentOS / Alma Linux
 
-        sudo dnf install podman
+    sudo dnf install podman
 
 __NOTE:__ Think of a container the same way as when you run any other service, like a webserver. 
 
 Example:
-
-
-        systemctl start httpd
+>__systemctl start httpd__
 
 When running a container you are running a *command* not a *virtual machine* 
 
-When talking about containers there is the concept of a container *"image"* - the container __image__ is simply a tar file that holds the contents of a container. When you *run* a container you are actually running the container image. After you initially run a container from an image you can then *start* and *stop* the container.
+When talking about containers there is the concept of a container *"image"* - the container __image__ is simply a tar file that holds the contents of a container. When you *run* a container you are actually running the container image. After you initially run a container from an image you can *stop* the container and then *start* the image again. Try those commands now.
+
+#### Exercise 1.b
+
+-- Run
+
+  podman run --name web docker.io/library/httpd
+
+-- Stop
+
+    podman stop web
+
+-- Start
+
+    podman start web
+
+-- List running containers
+
+    podman ps 
 
 
 ### Registries
@@ -37,70 +55,70 @@ We also have the concept or __container registries__. A container *registry* is 
 - regisry.access.redhat.com
 
 
-#### Excersise 1.a
+#### Excersise 1.c
 
-1. To search through your configured registries for any Apache (httpd) images type the following:
+To search through your configured registries for any Apache (httpd) images type the following:
 
-        podman search httpd
+    podman search httpd
 
-    If you have some registries configured in /etc/containers/registries.conf you will see a plethora of results.
+If you have some registries configured in /etc/containers/registries.conf you will see a plethora of results.
 
-    To limt and filter your results type the following: 
+To limt and filter your results type the following: 
 
-        podman search --limit 5 --format "table {{.Name}}" httpd
-
-    >NAME  
-    registry.access.redhat.com/rhscl/httpd-24-rhel7  
-    registry.access.redhat.com/ubi9/httpd-24  
-    registry.access.redhat.com/ubi8/httpd-24  
-    registry.access.redhat.com/rhmap45/httpd  
-    registry.access.redhat.com/rhmap44/httpd  
-    registry.redhat.io/rhscl/httpd-24-rhel7  
-    registry.redhat.io/ubi9/httpd-24  
-    registry.redhat.io/rhel8/httpd-24  
-    registry.redhat.io/ubi8/httpd-24  
-    registry.redhat.io/rhel9/httpd-24  
-    docker.io/library/httpd  
-    docker.io/manageiq/httpd  
-    docker.io/paketobuildpacks/httpd  
-    docker.io/dockerpinata/httpd  
-    docker.io/jitesoft/httpd  
-
-    *Notice that __15__ results are return and not __5__. That is because there are 3 configured registries in /etc/containers/registries.conf so __5__ results per registry are being returned*
-
-1. From your comman prompt type the following:
-
-        podman images
+    podman search --limit 5 --format "table {{.Name}}" httpd
 
 
-    If this is your first time using __podman__ or __docker__ you will notice there are no images returned in the results.<br />
+  >NAME  
+   registry.access.redhat.com/rhscl/httpd-24-rhel7  
+   registry.access.redhat.com/ubi9/httpd-24  
+   registry.access.redhat.com/ubi8/httpd-24  
+   registry.access.redhat.com/rhmap45/httpd  
+   registry.access.redhat.com/rhmap44/httpd  
+   registry.redhat.io/rhscl/httpd-24-rhel7  
+   registry.redhat.io/ubi9/httpd-24  
+   registry.redhat.io/rhel8/httpd-24  
+   registry.redhat.io/ubi8/httpd-24  
+   registry.redhat.io/rhel9/httpd-24  
+   docker.io/library/httpd  
+   docker.io/manageiq/httpd  
+   docker.io/paketobuildpacks/httpd  
+   docker.io/dockerpinata/httpd  
+   docker.io/jitesoft/httpd  
+
+*Notice that __15__ results are return and not __5__. That is because there are 3 configured registries in /etc/containers/registries.conf so __5__ results per registry are being returned*
+
+From your comman prompt type the following:
+
+    podman images
 
 
-    >[eholden@workstation-01 emwg]$ podman images\
-    >REPOSITORYTAG  IMAGE ID    CREATED     SIZE
+If this is your first time using __podman__ or __docker__ you will notice there are no images returned in the results.<br />
 
-<br />
 
-2. Now type the following
+    [eholden@workstation-01 emwg]$ podman images\
+    REPOSITORYTAG  IMAGE ID    CREATED     SIZE
 
-        podman pull docker.io/library/httpd
 
-<br /><br />
+Now type the following
+
+    podman pull docker.io/library/httpd
+
 
 ### Inspecting Images
 You can use the __skopeo__ command line tool inpsect an image on a remote registry before you pull it down. Simply typing: ```skopeo inspect docker://<FQCN>``` will pull down a JSON representation of the image meta-data. __FQCN__ stands for __Fully Qualified Container Name__ (*even though it's actually the "image" name*)
 
 
-#### Excersise 1.b
-1. To display the the FQCN __Name__ of the __AlmaLinux__ remote image, type the following:
+#### Excersise 1.d
 
-        skopeo inspect -f 'Name: {{.Name}}' docker://almalinux/9-micro
+To display the the FQCN __Name__ of the __AlmaLinux__ remote image, type the following:
+
+    skopeo inspect -f 'Name: {{.Name}}' docker://almalinux/9-micro
 
 
-2. To display the __Digest__ of the __Alpine Linux__ remote image, type the following:
+To display the __Digest__ of the __Alpine Linux__ remote image, type the following:
 
-        skopeo inspect -f 'Name: {{.Digest}}' docker://library/aplpine
+    skopeo inspect -f 'Name: {{.Digest}}' docker://library/aplpine
 
-3. To display the __Name__, __Size__ and __Digest__ of an image type the following at the command prompt:
+To display the __Name__, __Size__ and __Digest__ of an image type the following at the command prompt:
 
-        skopeo inspect -f 'Name: {{.Name}}\nSize: {{ range .LayersData }}{{ .Size }}{{ end }}\nDigest: {{.Digest}}' docker://almalinux/9-micro
+    skopeo inspect -f 'Name: {{.Name}}\nSize: {{ range .LayersData }}{{ .Size }}{{ end }}\nDigest: {{.Digest}}' docker://almalinux/9-micro
