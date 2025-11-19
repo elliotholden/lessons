@@ -11,7 +11,19 @@ You are running a *command* not a *virtual machine*
 
 When talking about containers there is the concept of a container *"image"* - the container __image__ is simply a tar file that holds the contents of a container. When you *run* a container you are actually running the container image. After you initially run a container from an image you can then *start* and *stop* the container.
 
-<br /><br />
+### Prerequisit for lesson plan
+To run a container you need a container runtime environment such as __containerd__ or __crio__. These container runtime enviroments are typically daemons that run in the background. Think of weberserver software such as __httpd__ or database software such as __MariaDB__; they both run in the background. To manage containers you need a tool such as __Podman__ or __Docker__. For the purposes of this course we will be using Podman, however Podman is interchangeable with Docker. So any commands you learn in Podman should also work on Docker.
+
+To install Podman do one of the following based on your operatring system
+
+Ubuntu / Debain
+
+        sudo apt install podman
+
+Red Hat / CentOS / Alma Linux
+
+        sudo dnf intall podman
+
 
 ### Registries
 We also have the concept or __container registries__. A container *registry* is nothing more than a repository (or location) of where container images are stored. Some popular regisries are:
@@ -20,7 +32,6 @@ We also have the concept or __container registries__. A container *registry* is 
 - docker.io
 - registry.redhat.io
 - regisry.access.redhat.com
-
 
 
 #### Excersise 1.a
