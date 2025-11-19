@@ -4,7 +4,7 @@ Containers are a lightweight and portable way to deploy applications. They provi
 
 Unlike a __vm__, instead of virtualizing an entire machine, it virtualizes the application and its dependencies. This makes containers much more efficient and lightweight than traditional virtual machines.
 
-To run a container you need a container runtime environment such as __containerd__ or __crio__. These container runtime enviroments are typically daemons that run in the background. Think of weberserver software such as __httpd__ or database software such as __MariaDB__; they both run in the background. To manage containers you need a tool such as __Podman__ or __Docker__. For the purposes of this course we will be using Podman, however Podman is interchangeable with Docker. So any commands you learn in Podman should also work on Docker.
+To run a container you need a container runtime environment such as __containerd__ or __crio__. These container runtime enviroments are typically daemons that run in the background. Think of webserver software such as __Apache__ or database software such as __MariaDB__; they both run in the background. To manage containers you need a tool such as __Podman__ or __Docker__. These are sometimes refered to as container engines. For the purposes of this course we will be using Podman, however Podman is interchangeable with Docker. So any commands you learn in Podman should also work on Docker.
 
 To install Podman do one of the following based on your operatring system
 
@@ -14,7 +14,7 @@ Ubuntu / Debain
 
 Red Hat / CentOS / Alma Linux
 
-        sudo dnf intall podman
+        sudo dnf install podman
 
 __NOTE:__ Think of a container the same way as when you run any other service, like a webserver. 
 
